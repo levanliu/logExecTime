@@ -21,5 +21,7 @@ public class LogExecTimeApplication {
 	@PostConstruct
 	public void initialize() throws InterruptedException {
 		calculate.addTwoArrayList();
+
+		calculate.subTwoArrayList();
 	}
 }

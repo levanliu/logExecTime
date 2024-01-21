@@ -2,19 +2,20 @@ package com.advantest.logExecTime.jobs;
 
 import org.eclipse.core.runtime.jobs.Job;
 
+import java.util.Map;
+
 public class JobManager {
-    private static int jobCounter = 0 ;
 
-    public void scheduleJob(Job job){
-        job.schedule();
-        jobCounter++;
+    Map<String,Long> jobMap;
+    public void jobStarted(String jobId, JobType jobType){
+        long startTime = System.currentTimeMillis();
+        jobMap.put(jobId,startTime);
+        System.out.println("Job Start: " + jobId + " " +  startTime + " " + jobType);
     }
 
-    public static int getJobCount(){
-        return jobCounter;
-    }
-
-    public void cancelJob(Job job){
-
+    public void jobFinished(String jobId,JobType jobType){
+        long finishTime = System.currentTimeMillis();
+        jobMap.remove(jobId);
+        System.out.println("Job Finish: " + jobId + " " +  finishTime + " " + jobType);
     }
 }
