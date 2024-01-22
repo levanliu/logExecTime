@@ -8,28 +8,33 @@ import org.eclipse.core.runtime.jobs.Job;
 public abstract class CalculateJob extends Job {
 
     private JobCompletionObserver observer;
+    private JobManager jobManager = new JobManager();
 
-    private JobManager jobManager;
     public CalculateJob(String name) {
         super(name);
     }
 
-    protected abstract void performRun(IProgressMonitor monitor);
+    protected abstract void performRun(IProgressMonitor monitor) throws InterruptedException;
 
     protected abstract String getJobId();
 
     protected abstract JobType getJobType();
+
+    public void setObserver(JobCompletionObserver observer) {
+        this.observer = observer;
+    }
+
     @Override
     final protected IStatus run(IProgressMonitor monitor) {
         // Simulate some work
         try {
-            jobManager.jobStarted(getJobId(),getJobType());
+            jobManager.jobStarted(getJobId(), getJobType());
             performRun(monitor);
-            Thread.sleep(500); // Sleep for 1.5 seconds
-        } catch (InterruptedException e) {
+            
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            jobManager.jobFinished(getJobId(),getJobType());
+        } finally {
+            jobManager.jobFinished(getJobId(), getJobType());
         }
 
         if (observer != null) {
@@ -38,5 +43,5 @@ public abstract class CalculateJob extends Job {
 
         return Status.OK_STATUS;
     }
-
 }
+

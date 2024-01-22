@@ -23,9 +23,10 @@ public class AddJob extends CalculateJob {
     }
 
     @Override
-    protected void performRun(IProgressMonitor monitor) {
+    protected void performRun(IProgressMonitor monitor) throws InterruptedException {
         int sum = arrayList1.get(index) + arrayList2.get(index);
-        arrayList1.set(index,sum);
+        arrayList1.set(index, sum);
+        Thread.sleep(500); // Sleep for 0.5 seconds
         System.out.println("AddJob executed at index: " + index);
     }
 
@@ -39,3 +40,4 @@ public class AddJob extends CalculateJob {
         return JobType.AddType;
     }
 }
+

@@ -2,11 +2,13 @@ package com.advantest.logExecTime.jobs;
 
 import org.eclipse.core.runtime.jobs.Job;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class JobManager {
 
-    Map<String,Long> jobMap;
+    private Map<String,Long> jobMap = new HashMap<>();
+
     public void jobStarted(String jobId, JobType jobType){
         long startTime = System.currentTimeMillis();
         jobMap.put(jobId,startTime);

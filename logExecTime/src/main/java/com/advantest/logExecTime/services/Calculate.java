@@ -9,13 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class Calculate implements JobCompletionObserver {
-
     private final List<Integer> arrayList1 = new ArrayList<>();
     private final List<Integer> arrayList2 = new ArrayList<>();
 
@@ -29,27 +25,18 @@ public class Calculate implements JobCompletionObserver {
 
     @LogExecTime
     public void addTwoArrayList() throws InterruptedException {
-
-
         for (int i = 0; i < arrayList1.size(); i++) {
             CalculateJob addJob = new AddJob("Demo AddJob " + i, arrayList1, arrayList2, i);
             addJob.schedule();
-            addJob.join();
         }
-
     }
 
     @LogExecTime
     public void subTwoArrayList() throws InterruptedException {
-
-
         for (int i = 0; i < arrayList1.size(); i++) {
             CalculateJob subJob = new SubJob("Demo SubJob " + i, arrayList1, arrayList2, i);
             subJob.schedule();
-            subJob.join();
         }
-
-
     }
 
     @Override
